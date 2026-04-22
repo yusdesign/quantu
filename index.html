@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>∫QTU - Integral Quantu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0f;
+            color: #e0e0e8;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid #2a2a3a;
+            padding: 30px 25px;
+            border-radius: 4px;
+            background: #0d0d14;
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.03);
+        }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 400;
+            letter-spacing: 8px;
+            text-align: center;
+            color: #a0ffc0;
+            text-shadow: 0 0 15px rgba(160, 255, 192, 0.3);
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6a6a8a;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #1a1a2a;
+            padding-bottom: 20px;
+        }
+        .philosophy {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #c0c0d0;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .panel {
+            background: #08080c;
+            border: 1px solid #1a1a2a;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+        }
+        .panel-title {
+            color: #80ffb0;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            background: #000005;
+            border: 1px solid #2a2a4a;
+            color: #e0e0e8;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            border-radius: 2px;
+            outline: none;
+        }
+        input:focus {
+            border-color: #80ffb0;
+            box-shadow: 0 0 10px rgba(128, 255, 176, 0.2);
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #102018;
+            border: 1px solid #40a060;
+            color: #a0ffc0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.2s;
+            border-radius: 2px;
+        }
+        button:hover {
+            background: #183020;
+            border-color: #80ffb0;
+            box-shadow: 0 0 20px rgba(128, 255, 176, 0.15);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            background: #050508;
+            border-left: 3px solid #40a060;
+            font-size: 0.9rem;
+            color: #90b0a0;
+            display: none;
+        }
+        .status.show {
+            display: block;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #1a1a2a;
+            color: #7a7a9a;
+            font-size: 0.85rem;
+        }
+        .integral-symbol {
+            color: #a0ffc0;
+            font-size: 1.4rem;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #4a4a6a;
+            font-size: 0.8rem;
+        }
+        a {
+            color: #80b0ff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>∫QTU</h1>
+        <div class="subtitle">INTEGRAL QUANTU</div>
+        <div class="philosophy">"I compute because we compute"</div>
+
+        <div class="panel">
+            <div class="panel-title">→ CONTRIBUTE COMPUTE</div>
+            <form id="submitForm">
+                <input type="text" id="contributor" placeholder="Your node ID (e.g., py_01)" required>
+                <input type="text" id="workHash" placeholder="Work hash (SHA256 of your computation)" required>
+                <button type="submit" id="submitBtn">∫ SUBMIT WORK</button>
+            </form>
+            <div id="status" class="status"></div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">→ NETWORK STATUS</div>
+            <div class="stats">
+                <span>Genesis:</span>
+                <span>📱 Phone Node (OBSERVED)</span>
+            </div>
+            <div class="stats">
+                <span>Total ∫ Integrated:</span>
+                <span id="totalSum">0.000</span>
+            </div>
+            <div class="stats">
+                <span>Last Block:</span>
+                <span id="lastBlock">GENESIS</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="integral-symbol">∫</span> "Your deposits won't be empty here" <span class="integral-symbol">∫</span><br>
+            <a href="https://github.com/YOUR_USERNAME/quantu-network" target="_blank">View on GitHub</a> | 
+            <a href="#" id="refreshLink">⟲ Refresh</a>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = '/api/submit';
+        
+        document.getElementById('submitForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const contributor = document.getElementById('contributor').value.trim();
+            const workHash = document.getElementById('workHash').value.trim();
+            const btn = document.getElementById('submitBtn');
+            const statusDiv = document.getElementById('status');
+            
+            if (!contributor || !workHash) {
+                showStatus('Both fields are required.', 'error');
+                return;
+            }
+            
+            // Basic SHA256 format check
+            if (!/^[a-f0-9]{64}$/i.test(workHash)) {
+                showStatus('Work hash must be a 64-character SHA256 hex string.', 'error');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = '∫ OBSERVING...';
+            statusDiv.classList.remove('show');
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contributor, work_hash: workHash })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showStatus(`∫ Received: ${data.message || 'Contribution integrated.'}`, 'success');
+                    document.getElementById('contributor').value = '';
+                    document.getElementById('workHash').value = '';
+                    loadStats();
+                } else {
+                    showStatus(`Error: ${data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (err) {
+                showStatus(`Network error: ${err.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '∫ SUBMIT WORK';
+            }
+        });
+        
+        function showStatus(msg, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = msg;
+            statusDiv.style.borderLeftColor = type === 'error' ? '#a04040' : '#40a060';
+            statusDiv.classList.add('show');
+        }
+        
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/stats');
+                const data = await res.json();
+                document.getElementById('totalSum').textContent = data.totalIntegrated.toFixed(4);
+                document.getElementById('lastBlock').textContent = data.lastBlock || 'GENESIS';
+            } catch (e) {
+                // Silent fail - stats will show defaults
+            }
+        }
+        
+        document.getElementById('refreshLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            loadStats();
+        });
+        
+        // Initial load
+        loadStats();
+    </script>
+</body>
+</html>
