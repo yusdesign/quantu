@@ -1,0 +1,27 @@
+{
+  "node": {
+    "id": "genesis-phone-01",
+    "name": "∫ Genesis Phone",
+    "type": "mobile",
+    "termux_version": "0.118.0",
+    "python_version": "3.11",
+    "created": "2026-04-22T00:00:00Z",
+    "public_key": "genesis_public_key_placeholder",
+    "endpoints": {
+      "submit": "https://quantu.vercel.app/api/submit",
+      "stats": "https://quantu.vercel.app/api/stats",
+      "chain": "https://raw.githubusercontent.com/yusdesign/quantu/main/ledger.json"
+    }
+  },
+  "membridge": {
+    "enabled": true,
+    "wing": "quantu",
+    "sync_on_compute": true,
+    "track_contributions": true
+  },
+  "compute": {
+    "default_work": "prime_factorization",
+    "auto_submit": true,
+    "min_interval_seconds": 3600
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://edge-config.vercel.com/schema.json",
+  "quantu": {
+    "network": {
+      "name": "∫QTU Integral Quantu",
+      "version": "0.1.0",
+      "genesis_hash": "I compute because we compute",
+      "genesis_observer": "∫",
+      "genesis_node": "genesis-phone-01"
+    },
+    "features": {
+      "submissions_open": true,
+      "require_work_proof": true,
+      "min_work_hash_difficulty": 1,
+      "reward_per_submission": 1.0
+    },
+    "membridge": {
+      "integration_enabled": true,
+      "sync_endpoint": "http://localhost:8765/membridge/ingest",
+      "wings": ["quantu", "compute", "contributions"]
+    },
+    "nodes": {
+      "trusted": ["genesis-phone-01"],
+      "bootstrap": []
+    }
+  }
+}
