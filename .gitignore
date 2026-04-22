@@ -205,3 +205,36 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Python (Termux bridge files - local only)
+*.py
+*.sh
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Termux specific
+termux-*
+.termux/
+
+# MemBridge local data
+.membridge/
+quantu-bridge.py
+submit-one.sh
+*.db
+*.sqlite
+*.sqlite3
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
+.next
+out/
+
+# IDE
+.vscode/
+.idea/
