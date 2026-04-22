@@ -2,9 +2,12 @@
   "genesis": {
     "message": "I compute because we compute",
     "timestamp": "2024-01-01T00:00:00.000Z",
-    "observer": "∫"
+    "observer": "\u222b"
   },
   "chain": [],
   "contributors": {},
-  "totalIntegrated": 0.0
+  "totalIntegrated": 0,
+  "submissions": 0,
+  "lastBlock": "GENESIS",
+  "lastSync": "2026-04-23T04:50:57+08:00"
 }
