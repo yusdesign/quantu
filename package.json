@@ -2,17 +2,10 @@
   "name": "quantu",
   "version": "0.2.0",
   "description": "∫QTU - Integral Quantu",
-  "main": "index.html",
   "engines": {
     "node": "24.x"
   },
   "dependencies": {
-    "@upstash/redis": "^1.29.0"
-  },
-  "scripts": {
-    "dev": "vercel dev"
-  },
-  "keywords": ["quantu", "integral", "compute", "upstash"],
-  "author": "yusdesign",
-  "license": "MIT"
+    "@upstash/redis": "latest"
+  }
 }
