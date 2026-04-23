@@ -211,8 +211,6 @@ __marimo__/
 *.sh
 __pycache__/
 *.pyc
-.venv/
-venv/
 
 # Termux specific
 termux-*
@@ -234,6 +232,13 @@ Thumbs.db
 .vercel
 .next
 out/
+api/submitjs.vercel
+node_modules/
+quantu/
+*.log
+.env.*
+.DS_Store
+sync-ledger.json
 
 # IDE
 .vscode/
