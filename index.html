@@ -243,17 +243,24 @@
             statusDiv.classList.add('show');
         }
         
+        // In index.html, replace the stats loading function
         async function loadStats() {
             try {
-                const res = await fetch('/api/stats');
+                const res = await fetch('/api/submit?action=stats');
                 const data = await res.json();
                 document.getElementById('totalSum').textContent = data.totalIntegrated.toFixed(4);
                 document.getElementById('lastBlock').textContent = data.lastBlock || 'GENESIS';
             } catch (e) {
-                // Silent fail - stats will show defaults
+                console.error('Stats fetch failed:', e);
             }
         }
-        
+
+        // Call on page load
+        loadStats();
+
+        // Refresh every 30 seconds
+        setInterval(loadStats, 30000);
+                
         document.getElementById('refreshLink').addEventListener('click', (e) => {
             e.preventDefault();
             loadStats();
